@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   //输入框样式
   textInputStyle: {
-    width: width - 30,
+    width: '100%',
     height: 35,
     paddingLeft: 8,
     backgroundColor: '#00000000',
