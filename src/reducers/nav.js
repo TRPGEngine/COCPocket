@@ -9,7 +9,6 @@ const initialNavState = AppNavigator.router.getStateForAction(
 );
 
 module.exports = function nav(state = initialNavState, action) {
-  console.log(state);
   let nextState;
   switch (action.type) {
     case 'Login':

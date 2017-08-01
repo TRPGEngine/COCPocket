@@ -1,8 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-
-// import LoginStatusMessage from './LoginStatusMessage';
-// import AuthButton from './AuthButton';
+import { StyleSheet, View, Text } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,8 +12,7 @@ const styles = StyleSheet.create({
 
 const MainScreen = () => (
   <View style={styles.container}>
-    {/* <LoginStatusMessage />
-    <AuthButton /> */}
+    <Text>主页</Text>
   </View>
 );
 
