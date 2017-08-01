@@ -8,7 +8,7 @@ function setup() {
     constructor() {
       super();
       this.state = {
-        isLoading: true,
+        isLoading: false,// true
         store: configureStore(() => this.setState({isLoading: false})),
       };
     }
@@ -20,7 +20,7 @@ function setup() {
 
       return (
         <Provider store={this.state.store}>
-          <COCPocket />
+           <COCPocket /> 
         </Provider>
       );
     }
