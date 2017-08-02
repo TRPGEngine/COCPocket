@@ -1,10 +1,20 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { addNavigationHelpers, StackNavigator, TabNavigator } = require('react-navigation');
-const Ionicons = require('react-native-vector-icons/Ionicons');
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const LoginScreen = require('./views/LoginScreen');
 const MainScreen = require('./views/MainScreen');
+const GroupScreen = require('./views/GroupScreen');
+const MyNotificationsSettingsScreen = ({ navigation }) => (
+  <MyNavScreen banner="Notifications Screen" navigation={navigation} />
+);
+const MyProfileScreen = ({ navigation }) => (
+  <MyNavScreen
+    banner={`${navigation.state.params.name}s Profile`}
+    navigation={navigation}
+  />
+);
 
 export const TabNav = TabNavigator({
   MainTab: {
@@ -13,27 +23,42 @@ export const TabNav = TabNavigator({
     navigationOptions: {
       title: '主页',
       tabBarLabel: '主页',
-      // tabBarIcon: ({ tintColor, focused }) => (
-      //   <Ionicons
-      //     name={focused ? 'ios-home' : 'ios-home-outline'}
-      //     size={26}
-      //     style={{ color: tintColor }}
-      //   />
-      // )
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Ionicons
+          name={focused ? 'ios-home' : 'ios-home-outline'}
+          size={26}
+          style={{ color: tintColor }}
+        />
+      ),
     }
   },
-  SettingsTab: {
-    screen: MainScreen,
-    path: 'settings',
+  Group: {
+    screen: GroupScreen,
+    path: 'group',
     navigationOptions: {
-      title: '设置',
-      // tabBarIcon: ({ tintColor, focused }) => (
-      //   <Ionicons
-      //     name={focused ? 'ios-settings' : 'ios-settings-outline'}
-      //     size={26}
-      //     style={{ color: tintColor }}
-      //   />
-      // ),
+      title: '组',
+      tabBarLabel: '组',
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Ionicons
+          name={focused ? 'ios-people' : 'ios-people-outline'}
+          size={26}
+          style={{ color: tintColor }}
+        />
+      ),
+    }
+  },
+  MeTab: {
+    screen: MainScreen,
+    path: 'me',
+    navigationOptions: {
+      title: '我',
+      tabBarIcon: ({ tintColor, focused }) => (
+        <Ionicons
+          name={focused ? 'ios-person' : 'ios-person-outline'}
+          size={26}
+          style={{ color: tintColor }}
+        />
+      ),
     }
   }
 }, {
@@ -42,14 +67,26 @@ export const TabNav = TabNavigator({
     swipeEnabled: false,
   })
 
-export const stackNav = StackNavigator({
+export const StackNav = StackNavigator({
   Root: { screen: TabNav },
-  Login: { screen: LoginScreen },
-  Main: { screen: MainScreen }
+  Login: { 
+    screen: LoginScreen,
+    navigationOptions: {
+      title: 'Notifications',
+    },
+  },
+  Main: {
+    screen: MyProfileScreen,
+    path: '/people/:name',
+    navigationOptions: ({ navigation }) => {
+      title: `${navigation.state.params.name}'s Profile!`;
+    },
+  }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
-  <TabNav navigation={addNavigationHelpers({ dispatch, state: nav })} />
+  <StackNav navigation={addNavigationHelpers({ dispatch, state: nav })} />
+  // <StackNav />
 );
 
 AppWithNavigationState.propTypes = {

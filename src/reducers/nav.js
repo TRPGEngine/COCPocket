@@ -1,7 +1,9 @@
 import { NavigationActions } from 'react-navigation';
-import { TabNav } from '../AppNavigator';
-const firstAction = TabNav.router.getActionForPathAndParams('main');
-const initialNavState = TabNav.router.getStateForAction(firstAction);
+import { StackNav, TabNav } from '../AppNavigator';
+const stackAction = StackNav.router.getActionForPathAndParams('Root');
+const stackState = StackNav.router.getStateForAction(stackAction);
+const tabAction = TabNav.router.getActionForPathAndParams('main');
+const initialNavState = TabNav.router.getStateForAction(tabAction, stackState);
 
 module.exports = function nav(state = initialNavState, action) {
   let nextState;
@@ -19,7 +21,8 @@ module.exports = function nav(state = initialNavState, action) {
     //   );
     //   break;
     default:
-      nextState = TabNav.router.getStateForAction(action, state);
+      // alert(JSON.stringify(state.index));
+      nextState = StackNav.router.getStateForAction(action, state);
       break;
   }
 
