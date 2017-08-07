@@ -1,11 +1,9 @@
-import { NavigationActions } from 'react-navigation';
-import { StackNav, TabNav } from '../AppNavigator';
-const stackAction = StackNav.router.getActionForPathAndParams('Root');
-const stackState = StackNav.router.getStateForAction(stackAction);
-const tabAction = TabNav.router.getActionForPathAndParams('main');
-const initialNavState = TabNav.router.getStateForAction(tabAction, stackState);
+const initialState = {
+  online: false,
+  groups: []
+};
 
-module.exports = function nav(state = initialNavState, action) {
+module.exports = function group(state = initialState, action) {
   let nextState;
   switch (action.type) {
     // case 'Login':
@@ -21,7 +19,6 @@ module.exports = function nav(state = initialNavState, action) {
     //   );
     //   break;
     default:
-      nextState = StackNav.router.getStateForAction(action, state);
       break;
   }
 

@@ -20,7 +20,7 @@ function setup() {
 
       return (
         <Provider store={this.state.store}>
-           <COCPocket /> 
+          <COCPocket />
         </Provider>
       );
     }

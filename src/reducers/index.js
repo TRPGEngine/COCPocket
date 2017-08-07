@@ -6,6 +6,7 @@ let reducers = combineReducers({
   },
   nav: require('./nav'),
   auth: require('./auth'),
+  group: require('./group'),
 });
 
 module.exports = reducers;

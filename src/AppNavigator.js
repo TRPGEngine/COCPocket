@@ -5,7 +5,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const LoginScreen = require('./views/LoginScreen');
 const MainScreen = require('./views/MainScreen');
-const GroupScreen = require('./views/GroupScreen');
+const MineScreen = require('./views/MineScreen');
+import GroupScreen from './views/GroupScreen';
+
 const MyNotificationsSettingsScreen = ({ navigation }) => (
   <MyNavScreen banner="Notifications Screen" navigation={navigation} />
 );
@@ -47,9 +49,9 @@ export const TabNav = TabNavigator({
       ),
     }
   },
-  MeTab: {
-    screen: MainScreen,
-    path: 'me',
+  MineTab: {
+    screen: MineScreen,
+    path: 'mine',
     navigationOptions: {
       title: '我',
       tabBarIcon: ({ tintColor, focused }) => (
@@ -72,7 +74,7 @@ export const StackNav = StackNavigator({
   Login: { 
     screen: LoginScreen,
     navigationOptions: {
-      title: 'Notifications',
+      title: '登录',
     },
   },
   Main: {
@@ -86,7 +88,6 @@ export const StackNav = StackNavigator({
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
   <StackNav navigation={addNavigationHelpers({ dispatch, state: nav })} />
-  // <StackNav />
 );
 
 AppWithNavigationState.propTypes = {

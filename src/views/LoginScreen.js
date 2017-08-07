@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, StyleSheet, Text, View, TouchableOpacity, Dimensions, Platform, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, TouchableOpacity, Dimensions, Platform, TextInput, Picker } from 'react-native';
+const Loading = require('./components/Loading');
 
 let width = Dimensions.get('window').width;
 const styles = StyleSheet.create({
@@ -60,38 +61,56 @@ const styles = StyleSheet.create({
   },
 });
 
-let _login = function(navigation) {
-  alert(JSON.stringify(navigation));
-  console.log(navigation);
-  
-  // navigation.dispatch({ type: 'Login' })
-}
+class LoginScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { loading: false };
+  }
 
-const LoginScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    {/*账号输入框在这里用View包裹以便处理器样式*/}
-    <Text style={styles.title}>欢迎来到TRPG的世界</Text>
-    <View style={styles.textInputViewStyle}>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder='账号' />
-    </View>
-    {/*密码输入框*/}
-    <View style={styles.textInputViewStyle}>
-      <TextInput
-        style={styles.textInputStyle}
-        placeholder='密码'
-        secureTextEntry={true} />
-    </View>
-    {/*设置控件可点击*/}
-    <TouchableOpacity onPress={() => { _login(navigation); }}>
-      {/*登录按钮*/}
-      <View style={styles.textLoginViewStyle}>
-        <Text style={styles.textLoginStyle}>登录</Text>
+  _login(navigation) {
+    // alert(JSON.stringify(navigation));
+    console.log(navigation);
+
+    // navigation.dispatch({ type: 'Login' })
+    this.setState({
+      loading: true
+    })
+  }
+
+  render() {
+    const { navigation} = this.props;
+    return (
+      <View style={styles.container}>
+        <Loading visible={this.state.loading} text='登录中...' />
+        {/*账号输入框在这里用View包裹以便处理器样式*/}
+        <Text style={styles.title}>欢迎来到TRPG的世界</Text>
+        <View style={styles.textInputViewStyle}>
+          <TextInput
+            style={styles.textInputStyle}
+            placeholder='账号'
+            autoCapitalize='none'
+            autoCorrect={false} />
+        </View>
+        {/*密码输入框*/}
+        <View style={styles.textInputViewStyle}>
+          <TextInput
+            style={styles.textInputStyle}
+            placeholder='密码'
+            secureTextEntry={true}
+            autoCapitalize='none'
+            autoCorrect={false} />
+        </View>
+        {/*设置控件可点击*/}
+        <TouchableOpacity onPress={() => { this._login(navigation) }}>
+          {/*登录按钮*/}
+          <View style={styles.textLoginViewStyle}>
+            <Text style={styles.textLoginStyle}>登录</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
-  </View>
-);
+    )
+  }
+}
 
 LoginScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
