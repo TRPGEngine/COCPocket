@@ -26,26 +26,36 @@ class LoginScreen extends React.Component {
     this.state = {
       loading: false,
       selectdServer: -1,
+      username: '',
+      password: '',
     };
   }
 
   _login(navigation) {
     // alert(JSON.stringify(navigation));
     console.log(navigation);
+    
+    let username = this.state.username;
+    let password = this.state.password;
+    let selectdServer = this.state.selectdServer;
 
-    // navigation.dispatch({ type: 'Login' })
-    this.setState({
-      loading: true
-    });
+    if(selectdServer>=0 && selectdServer < serverList.length) {
+      let serverInfo = serverList[selectdServer];
+      // alert(JSON.stringify({serverInfo, username, password}));
+      this.setState({
+        loading: true
+      });
+      let url = 'ws://' + serverInfo.ip + ":" + serverInfo.port;
+      this.props.dispatch(login(url, username, password));
+    }else{
+      alert('请选择服务器');
+    }
 
-    // alert(this.props.dispatch);
-    this.props.dispatch(login);
-
-    // alert(JSON.stringify(serverList[this.state.selectdServer]));
+    // this.props.dispatch(login);
   }
 
   render() {
-    const { navigation} = this.props;
+    const { navigation, isLoggedIn} = this.props;
     let list = serverList.map((item) => item.name);
     return (
       <View style={styles.container}>
@@ -70,7 +80,10 @@ class LoginScreen extends React.Component {
             style={styles.textInputStyle}
             placeholder='账号'
             autoCapitalize='none'
-            autoCorrect={false} />
+            autoCorrect={false}
+            value={this.state.username}
+            onChangeText={(username) => this.setState({ username })}
+          />
         </View>
         {/*密码输入框*/}
         <View style={styles.textInputViewStyle}>
@@ -79,7 +92,10 @@ class LoginScreen extends React.Component {
             placeholder='密码'
             secureTextEntry={true}
             autoCapitalize='none'
-            autoCorrect={false} />
+            autoCorrect={false}
+            value={this.state.password}
+            onChangeText={(password) => this.setState({ password })}
+          />
         </View>
         {/*设置控件可点击*/}
         <TouchableOpacity onPress={() => { this._login(navigation) }}>
@@ -88,7 +104,7 @@ class LoginScreen extends React.Component {
             <Text style={styles.textLoginStyle}>登录</Text>
           </View>
         </TouchableOpacity>
-        <Loading visible={this.state.loading} text='登录中...' />
+        <Loading visible={this.state.loading} text={isLoggedIn?'登录成功':'登录中...'} />
       </View>
     )
   }
@@ -173,4 +189,8 @@ LoginScreen.navigationOptions = {
   title: '登录',
 };
 
-module.exports = connect()(LoginScreen);
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isLoggedIn,
+});
+
+module.exports = connect(mapStateToProps)(LoginScreen);

@@ -8,7 +8,7 @@ function setup() {
     constructor() {
       super();
       this.state = {
-        isLoading: false,// true
+        isLoading: true,
         store: configureStore(() => this.setState({isLoading: false})),
       };
     }
