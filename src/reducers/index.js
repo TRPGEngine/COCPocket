@@ -7,6 +7,7 @@ let reducers = combineReducers({
   nav: require('./nav'),
   auth: require('./auth'),
   group: require('./group'),
+  message: require('./message'),
 });
 
 module.exports = reducers;

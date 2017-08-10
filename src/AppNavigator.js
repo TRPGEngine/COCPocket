@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const LoginScreen = require('./views/LoginScreen');
 const MainScreen = require('./views/MainScreen');
 const MineScreen = require('./views/MineScreen');
+const ChatScreen = require('./views/ChatScreen');
 import GroupScreen from './views/GroupScreen';
 
 const MyNotificationsSettingsScreen = ({ navigation }) => (
@@ -83,6 +84,10 @@ export const StackNav = StackNavigator({
     navigationOptions: ({ navigation }) => {
       title: `${navigation.state.params.name}'s Profile!`;
     },
+  },
+  Chat: {
+    screen: ChatScreen,
+    path: '/chat/:name',
   }
 });
 
