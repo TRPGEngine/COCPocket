@@ -1,3 +1,5 @@
+import { NavigationActions } from 'react-navigation';
+import { StackNav, TabNav } from '../AppNavigator';
 const initialAuthState = { isLoggedIn: false };
 
 module.exports = function auth(state = initialAuthState, action) {
@@ -5,8 +7,7 @@ module.exports = function auth(state = initialAuthState, action) {
     case 'LOGIN':
       return { ...state, isLoggedIn: true };
     case 'LOGIN_SUCCESS':
-      console.log("auth reducer", action);
-      return {...state, isLoggedIn: true};
+      return { ...state, isLoggedIn: true };
     case 'LOGIN_ERROR':
       return {...state, isLoggedIn: false};
     case 'LOGOUT':

@@ -8,7 +8,7 @@ const initialNavState = TabNav.router.getStateForAction(tabAction, stackState);
 module.exports = function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
-    // case 'Login':
+    // case 'LOGIN_SUCCESS':
     //   nextState = AppNavigator.router.getStateForAction(
     //     NavigationActions.back(),
     //     state

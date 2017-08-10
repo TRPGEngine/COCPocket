@@ -10,24 +10,40 @@ class GroupList extends React.Component {
     alert(JSON.stringify(this.props));
   }
 
-  render() {
+  getList() {
     let { groups, isLoggedIn, loginScreen } = this.props;
+
+    if(!isLoggedIn) {
+      return (
+        <TouchableOpacity style={{ marginTop: 200 }} onPress={loginScreen}>
+          <Text style={styles.loginTip}>请先登录</Text>
+        </TouchableOpacity>
+      )
+    }else {
+      if(groups.length == 0) {
+        return (
+          <TouchableOpacity style={{ marginTop: 200 }}>
+            <Text style={styles.loginTip}>您暂时没有团哦</Text>
+          </TouchableOpacity>
+        )
+      }else {
+        return (
+          groups.map((item, index) => (
+            <GroupCell
+              key={index}
+              info={item}
+            />
+          ))
+        )
+      }
+    }
+  }
+
+  render() {
+    let list = this.getList();
     return (
       <ScrollView style={styles.container}>
-        {
-          isLoggedIn
-            ? groups.map((item, index) => (
-              <GroupCell
-                key={index}
-                info={item}
-              />
-            ))
-            : (
-              <TouchableOpacity style={{marginTop:200}} onPress={loginScreen}>
-                <Text style={styles.loginTip}>请先登录</Text>
-              </TouchableOpacity>
-            )
-        }
+        {list}
       </ScrollView>
     )
   }

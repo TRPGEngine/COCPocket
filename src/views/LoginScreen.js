@@ -41,7 +41,6 @@ class LoginScreen extends React.Component {
 
     if(selectdServer>=0 && selectdServer < serverList.length) {
       let serverInfo = serverList[selectdServer];
-      // alert(JSON.stringify({serverInfo, username, password}));
       this.setState({
         loading: true
       });
@@ -54,13 +53,22 @@ class LoginScreen extends React.Component {
     // this.props.dispatch(login);
   }
 
+  componentDidUpdate() {
+    console.log(this.props.isLoggedIn);
+    if (this.props.isLoggedIn) {
+      setTimeout(() => {
+        this.props.navigation.goBack();
+      }, 200);
+    }
+  }
+
   render() {
-    const { navigation, isLoggedIn} = this.props;
+    const { navigation } = this.props;
     let list = serverList.map((item) => item.name);
     return (
       <View style={styles.container}>
         <Text style={styles.title}>欢迎来到TRPG的世界{this.state.selectdServer}</Text>
-        <View style={styles.textInputViewStyle}>
+         <View style={styles.textInputViewStyle}>
           <ModalDropdown
             defaultValue='请选择服务器'
             style={styles.serverSelectStyle}
@@ -73,7 +81,7 @@ class LoginScreen extends React.Component {
               });
             }}
           />
-        </View>
+        </View> 
         {/*账号输入框在这里用View包裹以便处理器样式*/}
         <View style={styles.textInputViewStyle}>
           <TextInput
@@ -104,7 +112,7 @@ class LoginScreen extends React.Component {
             <Text style={styles.textLoginStyle}>登录</Text>
           </View>
         </TouchableOpacity>
-        <Loading visible={this.state.loading} text={isLoggedIn?'登录成功':'登录中...'} />
+        <Loading visible={this.state.loading} text='登录中...' />
       </View>
     )
   }

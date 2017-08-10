@@ -6,6 +6,8 @@ const initialState = {
 module.exports = function group(state = initialState, action) {
   let nextState;
   switch (action.type) {
+    case 'UPDATE_GROUP':
+      return { groups: action.groups};
     // case 'Login':
     //   nextState = AppNavigator.router.getStateForAction(
     //     NavigationActions.back(),
